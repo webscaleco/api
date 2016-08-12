@@ -31,8 +31,8 @@ router.route('/session/rower/:name')
         res.json(r);
     })
     .delete((req, res) => {
-        //remove rower
-        //req.params.name
+        _.remove(session.rowers, { name: req.params.name });
+        res.status(200).end();
     })
 
 export default router;
