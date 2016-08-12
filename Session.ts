@@ -1,6 +1,6 @@
 import Rower from './Rower';
 
-class Session {
+export class Session {
     status: string = 'idle';
     rowers: Rower[] = [
         { name: 'jeremy' }

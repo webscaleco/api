@@ -33,6 +33,7 @@ router.route('/session/rower/:name')
     .delete((req, res) => {
         _.remove(session.rowers, { name: req.params.name });
         res.status(200).end();
+        
     })
 
 export default router;
