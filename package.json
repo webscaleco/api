@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "start": "npm run tsc:w; nodemon index.js"
+    "start": "nodemon ."
   },
   "license": "Apache-2.0",
   "repository": {
