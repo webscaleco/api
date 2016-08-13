@@ -1,18 +1,3 @@
-import Rower from './Rower';
-
-export class Session {
-    status: string = 'idle';
-    rowers: Rower[] = [
-        { name: 'jeremy' }
-    ];
-
-    start() {
-        this.status = 'active';
-    }
-
-    end() {
-        this.status = 'idle';
-    }
-}
+import { Session, Rower } from './models';
 
 export default new Session();

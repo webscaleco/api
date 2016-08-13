@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as _ from 'lodash';
-import session from './Session';
+import session from './session';
 
 let router = express.Router();
 
