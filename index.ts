@@ -3,7 +3,6 @@ import * as bodyParser from 'body-parser';
 import config from './config';
 import http = require('http');
 import socketio = require('socket.io');
-import session from './Session';
 import sessionRouter from './session-router';
 
 var port = process.env.port || config.devPort;
