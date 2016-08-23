@@ -4,12 +4,14 @@ import config from './config';
 import http = require('http');
 import socketio = require('socket.io');
 import sessionRouter from './session-router';
+import uiRouter from './ui-router';
 
 var port = process.env.port || config.devPort;
 let app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', uiRouter);
 app.use('/api', sessionRouter);
 
 //setup socket.io
