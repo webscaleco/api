@@ -26,8 +26,8 @@ router.route('/session/rower/:name')
         res.json(_.find(session.rowers, { name: req.params.name }));
     })
     .post((req, res) => {
-        let r = { name: req.params.name };
-        session.rowers.push(r);
+        let r = { id: 0,  name: req.params.name };
+        session.addRower(r);
         res.json(r);
     })
     .delete((req, res) => {
