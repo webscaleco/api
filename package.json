@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "author": "Jeremy Foster <jeremy.foster@microsoft.com>",
   "description": "API for the Regatta project",
+  "main": "index.js",
   "scripts": {
     "tsc": "tsc",
     "tsc:w": "tsc -w",
