@@ -11,6 +11,7 @@ router.route('/session')
 
 router.route('/session/start')
     .post((req, res) => {
+        session.addRower({id:0, name:'Timmy'});
         session.start();
         res.json(session);
     });
