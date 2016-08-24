@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "start": "nodemon .",
+    "start": "node .",
     "postinstall": "node_modules\\typescript\\bin\\tsc -p"
   },
   "license": "Apache-2.0",
