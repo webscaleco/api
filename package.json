@@ -6,7 +6,8 @@
   "scripts": {
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "start": "nodemon ."
+    "start": "nodemon .",
+    "postinstall": "tsc"
   },
   "license": "Apache-2.0",
   "repository": {
