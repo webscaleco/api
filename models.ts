@@ -1,9 +1,7 @@
 export class Session {
     status: string = 'idle';
-    maxID: number = 0; 
-    rowers: Rower[] = [
-        { id: 0, name: 'jeremy' }
-    ];
+    maxID: number = 1; 
+    rowers: Rower[] = [];
 
     start() {
         this.status = 'active';
@@ -14,9 +12,11 @@ export class Session {
     }
 
     addRower(rower:Rower) { 
-        rower.id 
-        this.rowers.push(rower)
+        rower.id = this.maxID++; 
+        this.rowers.push(rower); 
+        console.log(rower); 
     }
+
 }
 
 export class Rower {
