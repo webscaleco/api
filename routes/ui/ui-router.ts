@@ -1,5 +1,5 @@
 import * as express from 'express';
-import session from './session';
+import session from '../../session';
 
 let router = express.Router();
 
@@ -8,4 +8,4 @@ router.route('/')
         res.end('hi... I\'m the Regatta API.');
     });
 
-export default router;
+module.exports = router;
