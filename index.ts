@@ -3,9 +3,8 @@ import * as bodyParser from 'body-parser';
 import config from './config';
 import http = require('http');
 import socketio = require('socket.io');
-
-var sessionRouter = require('./routes/session/session-router');
-var uiRouter = require('./routes/ui/ui-router');
+import sessionRouter from './routes/session-router';
+import uiRouter from './routes/ui-router';
 
 var port = process.env.port || config.devPort;
 let app = express();

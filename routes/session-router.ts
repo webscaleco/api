@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as _ from 'lodash';
-import session from '../../session';
+import session from '../session';
 
 let router = express.Router();
 
@@ -36,4 +36,4 @@ router.route('/session/rower/:name')
         
     })
 
-module.exports = router;
+export default router;
