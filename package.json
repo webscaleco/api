@@ -7,13 +7,12 @@
   "scripts": {
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "start": "node .",
-    "postinstall": "node_modules/typescript/bin/tsc -p"
+    "start": "node ."
   },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stephshelley/regatta-api.git"
+    "url": "git+https://github.com/regatta-app/api.git"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
