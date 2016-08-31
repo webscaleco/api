@@ -3,7 +3,7 @@ import * as bodyParser from 'body-parser';
 import config from './config';
 import http = require('http');
 import socketio = require('socket.io');
-import sessionRouter from './routes/session-router';
+import apiRouter from './routes/api-router';
 import session from './session';
 
 var port = process.env.port || config.devPort;
@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', express.static(__dirname + '/public'));
-app.use('/api', sessionRouter);
+app.use('/api', apiRouter);
 
 //setup socket.io
 let server = http.Server(app);
@@ -39,7 +39,7 @@ io.on("connection", function (socket) {
                 r.distance = Math.min(session.distance, d.distance);
                 if (r.distance >= session.distance) {
                     //TODO:declare winner
-                    this.startTime = null;
+                    session.end();
                 }
             }
 
