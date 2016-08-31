@@ -2,6 +2,7 @@ export class Session {
     status: string = 'idle';
     maxID: number = 1; 
     rowers: Rower[] = [];
+    distance: number = 150;
 
     start() {
         this.status = 'active';
@@ -20,6 +21,8 @@ export class Session {
 }
 
 export class Rower {
-    id:number; 
+    // the id and distance are optional property (requires TS 2.0)
+    id?:number; 
     name:string;
+    distance?:number;
 }
