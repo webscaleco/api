@@ -6,6 +6,7 @@ export class Session {
 
     start() {
         this.status = 'active';
+        this.rowers.forEach(r => r.distance = 0);
     }
 
     end() {
