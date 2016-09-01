@@ -39,7 +39,7 @@ socketServer.on("connection", function (socket) {
                 socketServer.send({ message: 'rower-change', rower: r });
                 if (r.distance >= session.distance) {
                     //TODO:declare winner
-                    session.end();
+                //     session.end();
                 }
             }
         }
