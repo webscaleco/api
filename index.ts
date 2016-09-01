@@ -27,15 +27,15 @@ socketServer.on("connection", function (socket) {
 
             //add rower if they don't aready exist
             if (!session.rowers.some(r => r.name == d.name)) {
-                console.log(`adding ${d.name}`);
                 session.addRower({ name: d.name });
                 socketServer.send({ message: 'session-change', session: session });
             }
 
             //if the session is active, record the rowers new distance
             if (session.status == 'active') {
-                let r = session.rowers.filter(r => r.name == d.name)[0];
-                r.distance = Math.min(session.distance, d.distance);
+                let r = session.rowers.find(r => r.name == d.name);
+                r.distance = d.distance;
+                // r.distance = Math.min(session.distance, d.distance);
                 socketServer.send({ message: 'rower-change', rower: r });
                 if (r.distance >= session.distance) {
                     //TODO:declare winner
