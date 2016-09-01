@@ -14,6 +14,7 @@ export class Session {
 
     addRower(rower:Rower) { 
         rower.id = this.maxID++; 
+            rower.distance = 0;
         this.rowers.push(rower); 
         return rower; 
     }
