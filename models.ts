@@ -12,11 +12,15 @@ export class Session {
         this.status = 'idle';
     }
 
-    addRower(rower:Rower) { 
+    addRower(rower: Rower) {
+        if (!this.rowers.some(r => r.name == rower.name)) {
         rower.id = this.maxID++; 
             rower.distance = 0;
         this.rowers.push(rower); 
         return rower; 
+        }
+        else
+            return this.rowers.find(r => r.name == rower.name);
     }
 
 }
