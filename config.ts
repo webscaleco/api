@@ -1,4 +1,3 @@
 export default {
-    connectionString:null,
-    devPort:8080
+    port: 8080
 }

@@ -6,7 +6,8 @@ import socketio = require('socket.io');
 import apiRouter from './routes/api-router';
 import session from './session';
 
-var port = process.env.port || config.devPort;
+//config
+var port = process.env.port || config.port;
 let app = express();
 
 app.use(bodyParser.json());
