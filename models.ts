@@ -15,7 +15,7 @@ export class Session {
     addRower(rower:Rower) { 
         rower.id = this.maxID++; 
         this.rowers.push(rower); 
-        console.log(rower); 
+        return rower; 
     }
 
 }
