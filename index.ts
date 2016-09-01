@@ -1,26 +1,59 @@
 import * as express from 'express';
+import socketio = require('socket.io');
 import * as bodyParser from 'body-parser';
 import config from './config';
 import http = require('http');
-import socketio = require('socket.io');
-import apiRouter from './routes/api-router';
+import * as _ from 'lodash';
 import session from './session';
 
 //config
 var port = process.env.port || config.port;
+
 let app = express();
 
+//middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//configure routes
 app.use('/', express.static(__dirname + '/public'));
-app.use('/api', apiRouter);
+
+app.get('/api/session', (req, res) => {
+    res.json(session);
+});
+
+app.post('/api/session/start', (req, res) => {
+    session.start();
+    socketServer.send({ message: 'statechange' });
+    res.json(session);
+});
+
+app.post('/api/session/end', (req, res) => {
+    session.end();
+    res.json(session);
+});
+
+app.get('/api/session/rower/:name', (req, res) => {
+    res.json(_.find(session.rowers, { name: req.params.name }));
+})
+
+app.post('/api/session/rower/:name', (req, res) => {
+    let r = { id: 0, name: req.params.name };
+    session.addRower(r);
+    res.json(r);
+})
+
+app.delete('/api/session/rower/:name', (req, res) => {
+    _.remove(session.rowers, { name: req.params.name });
+    res.status(200).end();
+
+})
 
 //setup socket.io
 let server = http.Server(app);
-var io = socketio.listen(server);
+let socketServer = socketio.listen(server);
 
-io.on("connection", function (socket) {
+socketServer.on("connection", function (socket) {
     console.log(`connection establish (${socket.conn.id})`);
     socket.on("message", d => {
         if (d.message == 'strokedata') {
@@ -43,16 +76,15 @@ io.on("connection", function (socket) {
                     session.end();
                 }
             }
-
-
         }
         else {
             //pass other messages on to all connected socket clients
-            io.send(d);
+            socketServer.send(d);
         }
     });
 });
 
+//start the web server
 server.listen(port, function () {
     console.log("Listening on port %s...", server.address().port);
 });
