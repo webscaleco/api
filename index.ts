@@ -71,6 +71,10 @@ app.post('/api/session/end', (req, res) => {
     res.json(session);
 });
 
+app.get('/api/session/rowers', (req, res) => {
+    res.json(session.rowers);
+})
+
 app.get('/api/session/rower/:name', (req, res) => {
     res.json(_.find(session.rowers, { name: req.params.name }));
 })
