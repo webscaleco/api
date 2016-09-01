@@ -15,40 +15,6 @@ let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//configure routes
-app.use('/', express.static(__dirname + '/public'));
-
-app.get('/api/session', (req, res) => {
-    res.json(session);
-});
-
-app.post('/api/session/start', (req, res) => {
-    session.start();
-    socketServer.send({ message: 'statechange' });
-    res.json(session);
-});
-
-app.post('/api/session/end', (req, res) => {
-    session.end();
-    res.json(session);
-});
-
-app.get('/api/session/rower/:name', (req, res) => {
-    res.json(_.find(session.rowers, { name: req.params.name }));
-})
-
-app.post('/api/session/rower/:name', (req, res) => {
-    let r = { id: 0, name: req.params.name };
-    session.addRower(r);
-    res.json(r);
-})
-
-app.delete('/api/session/rower/:name', (req, res) => {
-    _.remove(session.rowers, { name: req.params.name });
-    res.status(200).end();
-
-})
-
 //setup socket.io
 let server = http.Server(app);
 let socketServer = socketio.listen(server);
@@ -62,15 +28,15 @@ socketServer.on("connection", function (socket) {
             //add rower if they don't aready exist
             if (!session.rowers.some(r => r.name == d.name)) {
                 console.log(`adding ${d.name}`);
-                session.addRower({
-                    name: d.name
-                });
+                session.addRower({ name: d.name });
+                socketServer.send({ message: 'session-change', session: session });
             }
 
             //if the session is active, record the rowers new distance
             if (session.status == 'active') {
                 let r = session.rowers.filter(r => r.name == d.name)[0];
                 r.distance = Math.min(session.distance, d.distance);
+                socketServer.send({ message: 'rower-change', rower: r });
                 if (r.distance >= session.distance) {
                     //TODO:declare winner
                     session.end();
@@ -83,6 +49,45 @@ socketServer.on("connection", function (socket) {
         }
     });
 });
+
+//configure routes
+//when state changes, we'll send a socket message so the UI can be update
+//when rowers are added or deleted we'll send a session-change socket message
+app.use('/', express.static(__dirname + '/public'));
+
+app.get('/api/session', (req, res) => {
+    res.json(session);
+});
+
+app.post('/api/session/start', (req, res) => {
+    session.start();
+    socketServer.send({ message: 'session-change', session: session });
+    res.json(session);
+});
+
+app.post('/api/session/end', (req, res) => {
+    session.end();
+    socketServer.send({ message: 'session-change', session: session });
+    res.json(session);
+});
+
+app.get('/api/session/rower/:name', (req, res) => {
+    res.json(_.find(session.rowers, { name: req.params.name }));
+})
+
+app.post('/api/session/rower/:name', (req, res) => {
+    let r = { name: req.params.name };
+    session.addRower(r);
+    socketServer.send({ message: 'session-change', session: session });
+    res.json(r);
+})
+
+app.delete('/api/session/rower/:name', (req, res) => {
+    _.remove(session.rowers, { name: req.params.name });
+    socketServer.send({ message: 'session-change', session: session });
+    res.status(200).end();
+})
+
 
 //start the web server
 server.listen(port, function () {
