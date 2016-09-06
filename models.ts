@@ -32,4 +32,7 @@ export class Rower {
     id?: number;
     name: string;
     distance?: number;
+    speed?: number;
+    averageSpeed?: number;
+    power?: number;
 }
