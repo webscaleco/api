@@ -60,12 +60,14 @@ app.get('/api/session', (req, res) => {
 app.post('/api/session/start', (req, res) => {
     session.start();
     socketServer.send({ message: 'session-change', session: session });
+    socketServer.send({ message: 'sessionstart' });
     res.json(session);
 });
 
 app.post('/api/session/end', (req, res) => {
     session.end();
     socketServer.send({ message: 'session-change', session: session });
+    socketServer.send({ message: 'sessionend' });
     res.json(session);
 });
 
