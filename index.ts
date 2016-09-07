@@ -1,13 +1,13 @@
 import * as express from 'express';
 import socketio = require('socket.io');
 import * as bodyParser from 'body-parser';
-import config from './config';
+import * as config from 'config';
 import http = require('http');
 import * as _ from 'lodash';
 import session from './session';
 
 //config
-var port = process.env.port || config.port;
+var port = process.env.port || (config.has('port') ? config.get('port') : 8080);
 
 let app = express();
 
