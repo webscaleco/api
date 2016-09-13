@@ -33,7 +33,7 @@ socketServer.on("connection", function (socket) {
             //if the session is active, record the rowers new properties
             if (session.status == 'active') {
                 let r = session.rowers.find(r => r.name == d.name);
-                r.distance = d.distance;
+                r.distance = d.ms_distance;
                 r.speed = d.m_s_total;
                 r.averageSpeed = d.m_s_average;
                 r.power = Math.round(d.total_kcal);
