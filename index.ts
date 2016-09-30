@@ -22,14 +22,14 @@ let socketServer = socketio.listen(server);
 socketServer.on("connection", function (socket) {
     console.log(`connection establish (${socket.conn.id})`);
     socket.on("message", d => {
-        if (d.message == 'strokedata') {
-            //handle strokedata messages right here
-
+        if (d.message == 'rower-checkin') {
             //add rower if they don't aready exist
             if (!session.rowers.some(r => r.name == d.name)) {
                 session.addRower({ name: d.name });
                 socketServer.send({ message: 'session-change', session: session });
             }
+        }
+        if (d.message == 'strokedata') {
             //if the session is active, record the rowers new properties
             if (session.status == 'active') {
                 let r = session.rowers.find(r => r.name == d.name);
